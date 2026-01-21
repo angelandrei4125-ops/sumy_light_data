@@ -1,0 +1,32 @@
+name: Update Schedule
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run parser
+        run: python parser.py
+
+      - name: Commit and push
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add schedules.json
+          git commit -m "Update schedule" || echo "No changes"
+          git push
