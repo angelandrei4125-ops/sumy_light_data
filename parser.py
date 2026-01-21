@@ -19,6 +19,5 @@ def parse_soe():
     # ВАЖНО: Строка ниже должна иметь отступ 4 пробела
     with open('schedules.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-
 if __name__ == "__main__":
     parse_soe()
